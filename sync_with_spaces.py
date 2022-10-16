@@ -5,11 +5,12 @@ def main(
     repo_id,
     directory,
     token,
+    repo_type='space',
 ):
     print("Syncing with Hugging Face Spaces...")
     print(f"\t- Repo ID: {repo_id}")
     print(f"\t- Directory: {directory}")
-    url = create_repo(repo_id, token=token, exist_ok=True)
+    url = create_repo(repo_id, token=token, exist_ok=True, repo_type=repo_type)
     print(f"\t- Repo URL: {url}")
     for filepath in Path(directory).glob("*"):
         if filepath.is_file() and filepath.suffix in ['.py', '.txt']:
@@ -19,6 +20,7 @@ def main(
                 path_in_repo=filepath.name,
                 token=token,
                 repo_id=repo_id,
+                repo_type=repo_type,
             )
         else:
             print("\t\t- Skipping", filepath)

@@ -45,6 +45,6 @@ jobs:
           pip install -r requirements.txt
           cd ..
           python cloned_spaces_action_repo/sync_with_spaces.py \
-            --repo_id ${{ inputs.github_repo_id }} \
+            --repo_id ${{ inputs.spaces_repo_id }} \
             --directory cloned_github_repo \
             --token ${{ secrets.hf_token }}
