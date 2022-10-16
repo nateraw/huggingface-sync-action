@@ -19,7 +19,7 @@ def main(
         space_sdk=space_sdk if repo_type == 'space' else None
     )
     print(f"\t- Repo URL: {url}")
-    for filepath in Path(directory).glob("*/**"):
+    for filepath in Path(directory).glob("**/*"):
 
         if not filepath.is_file():
             continue
