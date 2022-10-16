@@ -42,7 +42,7 @@ def main(
                 repo_type=repo_type,
             )
         else:
-            print("\t\t- Skipping {filepath} because it didn't match the search criteria")
+            print(f"\t\t- Skipping {filepath} because it didn't match the search criteria")
 
 if __name__ == "__main__":
     from fire import Fire
