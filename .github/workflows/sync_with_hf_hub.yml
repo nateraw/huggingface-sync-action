@@ -10,6 +10,9 @@ on:
       spaces_repo_id:
         required: true
         type: string
+      repo_type:
+        type: str
+        default: 'space'
     secrets:
       hf_token:
         required: true
@@ -47,4 +50,5 @@ jobs:
           python cloned_spaces_action_repo/sync_with_spaces.py \
             --repo_id ${{ inputs.spaces_repo_id }} \
             --directory cloned_github_repo \
-            --token ${{ secrets.hf_token }}
+            --token ${{ secrets.hf_token }} \
+            --repo_type ${{ inputs.repo_type }}
