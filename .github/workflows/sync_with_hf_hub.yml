@@ -7,7 +7,7 @@ on:
       github_repo_id:
         required: true
         type: string
-      spaces_repo_id:
+      huggingface_repo_id:
         required: true
         type: string
       repo_type:
@@ -21,7 +21,7 @@ on:
         required: true
 
 jobs:
-  sync_with_spaces:
+  sync_with_huggingface:
     runs-on: ubuntu-latest
 
     steps:
@@ -51,7 +51,7 @@ jobs:
           pip install -r requirements.txt
           cd ..
           python cloned_spaces_action_repo/sync_with_spaces.py \
-            --repo_id ${{ inputs.spaces_repo_id }} \
+            --repo_id ${{ inputs.huggingface_repo_id }} \
             --directory cloned_github_repo \
             --token ${{ secrets.hf_token }} \
             --repo_type ${{ inputs.repo_type }} \
