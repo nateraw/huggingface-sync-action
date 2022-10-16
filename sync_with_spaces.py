@@ -32,17 +32,14 @@ def main(
             print(f"\t\t- Skipping {filepath} because it is a GitHub README")
             continue
 
-        if filepath.suffix in ['.py', '.txt']:
-            print("\t\t- Uploading", filepath)
-            upload_file(
-                path_or_fileobj=str(filepath),
-                path_in_repo=filepath.name,
-                token=token,
-                repo_id=repo_id,
-                repo_type=repo_type,
-            )
-        else:
-            print(f"\t\t- Skipping {filepath} because it didn't match the search criteria")
+        print("\t\t- Uploading", filepath)
+        upload_file(
+            path_or_fileobj=str(filepath),
+            path_in_repo=filepath.name,
+            token=token,
+            repo_id=repo_id,
+            repo_type=repo_type,
+        )
 
 if __name__ == "__main__":
     from fire import Fire
