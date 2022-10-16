@@ -25,11 +25,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Source GitHub Repo to Push
+      - name: Checkout Action GitHub Repo
         uses: actions/checkout@v2
         with:
           repository: 'nateraw/spaces-action'
-          path: cloned_spaces_action_repo
+          path: cloned_hf_action_repo
 
       - name: Checkout Source GitHub Repo to Push
         uses: actions/checkout@v2
@@ -46,11 +46,11 @@ jobs:
       - name: Push to hub
         shell: bash
         run: |
-          cd cloned_spaces_action_repo
+          cd cloned_hf_action_repo
           git pull origin main
           pip install -r requirements.txt
           cd ..
-          python cloned_spaces_action_repo/sync_with_spaces.py \
+          python cloned_hf_action_repo/sync_with_spaces.py \
             --repo_id ${{ inputs.huggingface_repo_id }} \
             --directory cloned_github_repo \
             --token ${{ secrets.hf_token }} \
