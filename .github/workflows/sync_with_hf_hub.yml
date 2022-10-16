@@ -6,6 +6,9 @@ on:
       github_repo_id:
         required: true
         type: string
+      subdirectory:
+        type: string
+        default: ''
       huggingface_repo_id:
         required: true
         type: string
@@ -51,7 +54,7 @@ jobs:
           cd ..
           python cloned_hf_action_repo/sync_with_spaces.py \
             --repo_id ${{ inputs.huggingface_repo_id }} \
-            --directory cloned_github_repo \
+            --directory cloned_github_repo/{{ inputs.subdirectory }} \
             --token ${{ secrets.hf_token }} \
             --repo_type ${{ inputs.repo_type }} \
             --space_sdk ${{ inputs.space_sdk }}
