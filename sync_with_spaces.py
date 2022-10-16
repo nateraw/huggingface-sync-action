@@ -19,8 +19,20 @@ def main(
         space_sdk=space_sdk if repo_type == 'space' else None
     )
     print(f"\t- Repo URL: {url}")
-    for filepath in Path(directory).glob("*"):
-        if filepath.is_file() and filepath.suffix in ['.py', '.txt']:
+    for filepath in Path(directory).glob("*/**"):
+
+        if not filepath.is_file():
+            continue
+
+        if ".git" in str(filepath):
+            print(f"\t\t- Skipping {filepath} because it is in .git directory")
+            continue
+
+        if filepath.name == "README.md":
+            print(f"\t\t- Skipping {filepath} because it is a GitHub README")
+            continue
+
+        if filepath.suffix in ['.py', '.txt']:
             print("\t\t- Uploading", filepath)
             upload_file(
                 path_or_fileobj=str(filepath),
@@ -30,7 +42,7 @@ def main(
                 repo_type=repo_type,
             )
         else:
-            print("\t\t- Skipping", filepath)
+            print("\t\t- Skipping {filepath} because it didn't match the search criteria")
 
 if __name__ == "__main__":
     from fire import Fire
