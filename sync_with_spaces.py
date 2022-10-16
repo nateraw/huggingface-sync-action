@@ -12,15 +12,16 @@ def main(
     url = create_repo(repo_id, token=token, exist_ok=True)
     print(f"\t- Repo URL: {url}")
     for filepath in Path(directory).glob("*"):
-        print("\t\t- Uploading", filepath)
         if filepath.is_file() and filepath.suffix in ['.py', '.txt']:
+            print("\t\t- Uploading", filepath)
             upload_file(
-                path_or_fileobj=filepath,
+                path_or_fileobj=str(filepath),
                 path_in_repo=filepath.name,
                 token=token,
                 repo_id=repo_id,
             )
-
+        else:
+            print("\t\t- Skipping", filepath)
 
 if __name__ == "__main__":
     from fire import Fire
