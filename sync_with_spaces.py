@@ -6,11 +6,18 @@ def main(
     directory,
     token,
     repo_type='space',
+    space_sdk='gradio',
 ):
     print("Syncing with Hugging Face Spaces...")
     print(f"\t- Repo ID: {repo_id}")
     print(f"\t- Directory: {directory}")
-    url = create_repo(repo_id, token=token, exist_ok=True, repo_type=repo_type)
+    url = create_repo(
+        repo_id,
+        token=token,
+        exist_ok=True,
+        repo_type=repo_type,
+        space_sdk=space_sdk if repo_type == 'space' else None
+    )
     print(f"\t- Repo URL: {url}")
     for filepath in Path(directory).glob("*"):
         if filepath.is_file() and filepath.suffix in ['.py', '.txt']:
