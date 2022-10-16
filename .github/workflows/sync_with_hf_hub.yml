@@ -11,7 +11,7 @@ on:
         required: true
         type: string
       repo_type:
-        type: str
+        type: string
         default: 'space'
     secrets:
       hf_token:
