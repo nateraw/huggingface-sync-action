@@ -32,10 +32,11 @@ def main(
             print(f"\t\t- Skipping {filepath} because it is a GitHub README")
             continue
 
-        print("\t\t- Uploading", filepath)
+        path_in_repo = str(filepath.relative_to(Path(directory)))
+        print(f"\t\t- Uploading '{filepath}' to '{path_in_repo}'")
         upload_file(
             path_or_fileobj=str(filepath),
-            path_in_repo=filepath.name,
+            path_in_repo=path_in_repo,
             token=token,
             repo_id=repo_id,
             repo_type=repo_type,
