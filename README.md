@@ -1,4 +1,4 @@
-# spaces-action
+# huggingface-sync-action
 
 Test repo to play with GitHub action that'll sync a GitHub with Hugging Face Spaces
 
