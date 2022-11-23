@@ -18,6 +18,9 @@ on:
       space_sdk:
         type: string
         default: 'gradio'
+      private:
+        type: boolean
+        default: false
     secrets:
       hf_token:
         required: true
@@ -57,4 +60,5 @@ jobs:
             --directory "cloned_github_repo/${{ inputs.subdirectory }}" \
             --token ${{ secrets.hf_token }} \
             --repo_type ${{ inputs.repo_type }} \
-            --space_sdk ${{ inputs.space_sdk }}
+            --space_sdk ${{ inputs.space_sdk }} \
+            --private ${{ inputs.private }}
