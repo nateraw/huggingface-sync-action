@@ -1,4 +1,9 @@
 name: Sync With Hugging Face Hub
+description: An action to sync files on GitHub with a repo on the Hugging Face Hub (https://hf.co)
+author: nateraw
+branding:
+  icon: upload-cloud
+  color: yellow
 
 on:
   workflow_call:
