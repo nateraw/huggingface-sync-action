@@ -9,7 +9,7 @@ A simple example repo using this can be found [here](https://github.com/nateraw/
 The first step is to add a Hugging Face token with write access to your repo as a GitHub Secret. Below, mine is called `HF_TOKEN`. Then, you can use this action in your repo as shown below. :)
 
 ```yaml
-uses: nateraw/huggingface-sync-action/action.yml@main
+uses: nateraw/huggingface-sync-action@v0.0.2
 with:
   # The github repo you are syncing from. Required.
   github_repo_id: ''
