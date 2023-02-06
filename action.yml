@@ -5,60 +5,55 @@ branding:
   icon: upload-cloud
   color: yellow
 
-on:
-  workflow_call:
-    inputs:
-      github_repo_id:
-        required: true
-        type: string
-      subdirectory:
-        type: string
-        default: ''
-      huggingface_repo_id:
-        required: true
-        type: string
-      repo_type:
-        type: string
-        default: 'space'
-      space_sdk:
-        type: string
-        default: 'gradio'
-      private:
-        type: boolean
-        default: false
-    secrets:
-      hf_token:
-        required: true
+inputs:
+  github_repo_id:
+    required: true
+    type: string
+  subdirectory:
+    type: string
+    default: ''
+  huggingface_repo_id:
+    required: true
+    type: string
+  hf_token:
+    required: true
+  repo_type:
+    type: string
+    default: 'space'
+  space_sdk:
+    type: string
+    default: 'gradio'
+  private:
+    type: boolean
+    default: false
 
-jobs:
-  sync_with_huggingface:
-    runs-on: ubuntu-latest
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout Action GitHub Repo
+      uses: actions/checkout@v2
+      with:
+        repository: 'nateraw/spaces-action'
+        path: cloned_hf_action_repo
 
-    steps:
-      - name: Checkout Action GitHub Repo
-        uses: actions/checkout@v2
-        with:
-          repository: 'nateraw/spaces-action'
-          path: cloned_hf_action_repo
+    - name: Checkout Source GitHub Repo to Push
+      uses: actions/checkout@v2
+      with:
+        repository: '${{ inputs.github_repo_id }}'
+        # Relative path under $GITHUB_WORKSPACE to place the repository
+        path: cloned_github_repo
 
-      - name: Checkout Source GitHub Repo to Push
-        uses: actions/checkout@v2
-        with:
-          repository: '${{ inputs.github_repo_id }}'
-          # Relative path under $GITHUB_WORKSPACE to place the repository
-          path: cloned_github_repo
-
-      - name: Push to hub
-        shell: bash
-        run: |
-          cd cloned_hf_action_repo
-          git pull origin main
-          pip install -r requirements.txt
-          cd ..
-          python cloned_hf_action_repo/sync_with_spaces.py \
-            --repo_id ${{ inputs.huggingface_repo_id }} \
-            --directory "cloned_github_repo/${{ inputs.subdirectory }}" \
-            --token ${{ secrets.hf_token }} \
-            --repo_type ${{ inputs.repo_type }} \
-            --space_sdk ${{ inputs.space_sdk }} \
-            --private ${{ inputs.private }}
+    - name: Push to hub
+      shell: bash
+      run: |
+        cd cloned_hf_action_repo
+        git pull origin main
+        pip install -r requirements.txt
+        cd ..
+        python cloned_hf_action_repo/sync_with_spaces.py \
+          --repo_id ${{ inputs.huggingface_repo_id }} \
+          --directory "cloned_github_repo/${{ inputs.subdirectory }}" \
+          --token ${{ inputs.hf_token }} \
+          --repo_type ${{ inputs.repo_type }} \
+          --space_sdk ${{ inputs.space_sdk }} \
+          --private ${{ inputs.private }}
