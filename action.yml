@@ -31,13 +31,13 @@ runs:
   using: "composite"
   steps:
     - name: Checkout Action GitHub Repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
         repository: 'nateraw/spaces-action'
         path: cloned_hf_action_repo
 
     - name: Checkout Source GitHub Repo to Push
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
         repository: '${{ inputs.github_repo_id }}'
         # Relative path under $GITHUB_WORKSPACE to place the repository
