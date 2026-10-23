@@ -1,5 +1,9 @@
 # huggingface-sync-action
 
+> ⚠️ **This repository has been archived.** Please use [huggingface/hub-sync](https://github.com/huggingface/hub-sync) going forward.
+>
+> I originally built this action while working at Hugging Face. `hub-sync` grew out of a fork of this project and is now maintained by Hugging Face.
+
 A GitHub action that'll sync files from a GitHub repo with the Hugging Face Hub. 🤗
 
 A simple example repo using this can be found [here](https://github.com/nateraw/test-spaces-app).
