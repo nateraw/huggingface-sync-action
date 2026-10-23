@@ -1,0 +1,110 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "python: sync_with_huggingface.py",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/sync_with_huggingface.py",
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "preLaunchTask": "shell: link gradio test space",
+            "args": [
+                "--repo_id",
+                "${input:huggingfaceRepoId}",
+                "--directory",
+                "${input:syncDirectory}",
+                "--token",
+                "${input:hfToken}",
+                "--repo_type",
+                "${input:repoType}",
+                "--space_sdk",
+                "${input:spaceSdk}",
+                "--private",
+                "${input:privateRepo}",
+                "--include_readme",
+                "${input:includeReadme}",
+                "--generate_message",
+                "${input:generateMessage}"
+            ],
+            "env": {
+                "HF_TOKEN": "${input:hfToken}",
+                "HF_ENDPOINT": "https://huggingface.co"
+            },
+            "justMyCode": false
+        }
+    ],
+    "inputs": [
+        {
+            "id": "huggingfaceRepoId",
+            "type": "promptString",
+            "description": "Hugging Face repo id, e.g. username/space-name",
+            "default": "huggingface-sync-action"
+        },
+        {
+            "id": "syncDirectory",
+            "type": "promptString",
+            "description": "Directory to upload",
+            "default": "${workspaceFolder}/test/space"
+        },
+        {
+            "id": "hfToken",
+            "type": "promptString",
+            "description": "Hugging Face token. Leave as ${env:HF_TOKEN} to read from environment.",
+            "default": "${env:HF_TOKEN}",
+            "password": true
+        },
+        {
+            "id": "repoType",
+            "type": "pickString",
+            "description": "Hugging Face repo type",
+            "options": [
+                "space",
+                "model",
+                "dataset"
+            ],
+            "default": "space"
+        },
+        {
+            "id": "spaceSdk",
+            "type": "pickString",
+            "description": "Space SDK, only used when repo_type is space",
+            "options": [
+                "gradio",
+                "streamlit",
+                "static"
+            ],
+            "default": "gradio"
+        },
+        {
+            "id": "privateRepo",
+            "type": "pickString",
+            "description": "Create repo as private if it does not exist",
+            "options": [
+                "False",
+                "True"
+            ],
+            "default": "False"
+        },
+        {
+            "id": "includeReadme",
+            "type": "pickString",
+            "description": "Include README.md when uploading",
+            "options": [
+                "False",
+                "True"
+            ],
+            "default": "True"
+        },
+        {
+            "id": "generateMessage",
+            "type": "pickString",
+            "description": "Generate a commit message from the local git repository",
+            "options": [
+                "False",
+                "True"
+            ],
+            "default": "False"
+        }
+    ]
+}

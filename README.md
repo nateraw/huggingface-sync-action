@@ -15,7 +15,12 @@ The first step is to add a Hugging Face token with write access to your repo as 
 ```yaml
 uses: nateraw/huggingface-sync-action@v0.0.5
 with:
-  # The github repo you are syncing from. Required.
+  # The local path of the repo you are syncing from. Defaults to '.'
+  repo_path: '.'
+
+  # The github repo you are syncing from. Optional.
+  # 
+  # If provided, it will ignore the `repo_path` and checkout this GitHub repo.
   github_repo_id: ''
 
   # The Hugging Face repo id you want to sync to. (ex. 'username/reponame')
@@ -48,4 +53,12 @@ with:
   # An example using this option can be seen here:
   # https://github.com/huggingface/fuego/blob/830ed98/.github/workflows/sync-with-huggingface.yml
   subdirectory: ''
+
+  # If true, the action will include the README.md file in the sync.
+  # Defaults to false.
+  include_readme: false
+
+  # If true, the action will generate a commit message with original git commit info for the sync.
+  # Defaults to false.
+  generate_message: false
 ```

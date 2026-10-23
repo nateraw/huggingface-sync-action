@@ -1,0 +1,29 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "shell: link gradio test space",
+            "type": "shell",
+            "command": "${workspaceFolder}/scripts/link-gradio.sh",
+            "args": [
+                "--mode",
+                "${input:linkMode}",
+                "${workspaceFolder}/test/space",
+                "${workspaceFolder}/test/gradio"
+            ],
+            "problemMatcher": []
+        }
+    ],
+    "inputs": [
+        {
+            "id": "linkMode",
+            "type": "pickString",
+            "description": "Link mode for link-gradio.sh",
+            "options": [
+                "link",
+                "copy"
+            ],
+            "default": "copy"
+        }
+    ]
+}

@@ -1,0 +1,58 @@
+
+name: HuggingFace Space Sync
+
+on:
+  push:
+    branches:
+      - 'main'
+      - 'feature/**'
+
+jobs:
+  push-hf-space:
+    name: Push source code to HuggingFace
+    runs-on: ubuntu-latest
+    env:
+      # Fix BUG https://github.com/huggingface/huggingface_hub/issues/4571
+      HF_TOKEN: ${{ secrets.HF_TOKEN }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Sync local repo Gradio space to HuggingFace
+        uses: ./
+        with:
+          # repo_path: '.'
+          huggingface_repo_id: '${{ secrets.HF_USERNAME }}/huggingface-sync-action-gradio'
+          hf_token: ${{ secrets.HF_TOKEN }}
+          private: true
+          repo_type: 'space'
+          space_sdk: 'gradio'
+          subdirectory: 'test/gradio'
+
+      - name: Sync Github repo Gradio space to HuggingFace
+        uses: ./
+        with:
+          github_repo_id: '${{ github.repository_owner }}/huggingface-sync-action'
+          huggingface_repo_id: '${{ secrets.HF_USERNAME }}/huggingface-sync-action-gradio'
+          hf_token: ${{ secrets.HF_TOKEN }}
+          private: true
+          repo_type: 'space'
+          space_sdk: 'gradio'
+          subdirectory: 'test/gradio'
+
+      - name: Prepare Space directory
+        run: bash scripts/link-gradio.sh --mode copy test/space/ test/gradio/
+
+      - name: Sync README file with Git info to HuggingFace
+        uses: xiaoyao9184/huggingface-sync-action@main
+        with:
+          # repo_path: '.'
+          huggingface_repo_id: '${{ secrets.HF_USERNAME }}/huggingface-sync-action-gradio'
+          hf_token: ${{ secrets.HF_TOKEN }}
+          private: true
+          repo_type: 'space'
+          space_sdk: 'gradio'
+          subdirectory: 'test/space'
+          include_readme: true
+          generate_message: true
